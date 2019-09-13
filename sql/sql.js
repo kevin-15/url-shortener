@@ -13,7 +13,7 @@ async function createShortUrl(obj) {
 			uuid_generate_v4(),
 			'${obj.original_url}',
 			'${url_id}',
-			'${url_id}',
+			'${process.env.APP_HOST+url_id}',
 			'${custom}',
 			now(),
 			now()

@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
 		if (data.rows.length) {
 			res.send({
 				'success': true,
-				'short_url': data.rows[0].url_id
+				'short_url': data.rows[0].short_url
 			});
 		}
 
@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
 
 			res.send({
 				'success': true,
-				'short_url': url_id
+				'short_url': process.env.APP_HOST + url_id
 			});
 		}).catch((e) => {
 			return e;

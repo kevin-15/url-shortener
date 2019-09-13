@@ -12,10 +12,7 @@ router.get('/:url_id', async (req, res) => {
 
 	db.checkUrl(obj).then((data) => {
 		if (data.rows.length) {
-			res.send({
-				'success': true,
-				'short_url': data.rows[0].url_id
-			});
+			res.redirect(data.rows[0].original_url)
 		} else {
 			res.send({
 				'success': false,
