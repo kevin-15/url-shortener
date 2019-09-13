@@ -2,7 +2,7 @@ CREATE DATABASE url_shortener WITH OWNER = barry;
 
 CREATE TABLE "shortener" (
 	"id" uuid NOT NULL PRIMARY KEY,
-	"original_url" varchar(255) NOT NULL UNIQUE,
+	"original_url" varchar(255) NOT NULL,
 	"url_id" varchar(255) NOT NULL UNIQUE,
 	"short_url" varchar(255) NOT NULL UNIQUE,
 	"custom" boolean NOT NULL,

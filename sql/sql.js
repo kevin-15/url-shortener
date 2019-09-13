@@ -20,9 +20,20 @@ async function createShortUrl(obj) {
 		);
 	`;
 
+	const rows = await db.query(sql);
 
+	return rows;
+}
 
-	console.log(sql)
+async function checkUrl(obj) {
+	let regex = /custom-/g;
+	let url_id = obj.url_id.replace(regex, '');
+
+	let sql = `
+		SELECT * FROM shortener WHERE url_id = '${url_id}';
+	`;
+
+	console.log(sql);
 
 	const rows = await db.query(sql);
 
@@ -30,5 +41,6 @@ async function createShortUrl(obj) {
 }
 
 module.exports = {
-	createShortUrl
+	createShortUrl,
+	checkUrl
 };

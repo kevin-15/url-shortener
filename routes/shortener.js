@@ -12,22 +12,28 @@ router.post('/', async (req, res) => {
 	let obj = { original_url };
 	obj['url_id'] = url_id ? 'custom-' + url_id : shortid.generate()
 
-	// if (url_id) {
-	// 	obj['url_id'] = url_id;
-	// 	obj['custom'] = true;
-	// } else {
-	// 	obj['url_id'] = shortid.generate()
-	// 	obj['custom'] = false;
-	// }
+	db.checkUrl(obj).then((data) => {
+		if (data.rows.length) {
+			res.send({
+				'success': true,
+				'short_url': data.rows[0].url_id
+			});
+		}
 
-	// console.log(obj)
+		return obj;
 
-	// res.send({'success': true});
+	}).then((obj) => {
+		db.createShortUrl(obj).then((data) => {
+			let regex = /custom-/g;
+			let url_id = obj.url_id.replace(regex, '');
 
-	db.createShortUrl(obj).then((data) => {
-		console.log(data);
-
-		res.send({'success': true});
+			res.send({
+				'success': true,
+				'short_url': url_id
+			});
+		}).catch((e) => {
+			return e;
+		});
 	}).catch((e) => {
 		res.send({'error': e.detail});
 	});
