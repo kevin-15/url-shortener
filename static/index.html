@@ -1,0 +1,41 @@
+<head>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+<input type="text" name="original_url" placeholder="Original URL" id="original_url"><br />
+<input type="text" name="url_id" placeholder="Custom URL/Optional" id="url_id"><br />
+<button>Create Short URL</button><br /><br />
+<p id="shortened_url">Short URL: <pre></pre></p>
+
+<script type="text/javascript">	
+	$(document).ready(function(){
+		$('button').click(function(){
+			let original_url = $('#original_url').val();
+			let url_id = $('#url_id').val();
+
+			$.ajax({
+				type: 'POST',
+				url: 'http://13.229.247.118/add',
+				contentType: 'application/json',
+				dataType: 'json',
+				data: JSON.stringify({
+					original_url: original_url,
+					url_id: url_id
+				}),
+				success: function(response) {
+					console.log(response.short_url);
+
+					if ($('#url_link').length === 1) {
+						$('#url_link').replaceWith('<a id="url_link" href="'+ response.short_url +'">'+ response.short_url +'</p>');
+					} else {
+						$("pre").append('<a id="url_link" href="'+ response.short_url +'">'+ response.short_url +'</p>');
+					}					
+				},
+				error: function(response) {
+					console.log(response);
+				}
+			});
+
+			return false;
+		})
+	});
+</script>
