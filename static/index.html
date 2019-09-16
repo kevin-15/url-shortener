@@ -25,9 +25,9 @@
 					console.log(response.short_url);
 
 					if ($('#url_link').length === 1) {
-						$('#url_link').replaceWith('<a id="url_link" href="'+ response.short_url +'">'+ response.short_url +'</p>');
+						$('#url_link').replaceWith('<a id="url_link" target="_blank" href="'+ response.short_url +'">'+ response.short_url +'</p>');
 					} else {
-						$("pre").append('<a id="url_link" href="'+ response.short_url +'">'+ response.short_url +'</p>');
+						$("pre").append('<a id="url_link" target="_blank" href="'+ response.short_url +'">'+ response.short_url +'</p>');
 					}					
 				},
 				error: function(response) {
