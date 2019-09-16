@@ -22,13 +22,21 @@
 					url_id: url_id
 				}),
 				success: function(response) {
-					console.log(response.short_url);
-
-					if ($('#url_link').length === 1) {
-						$('#url_link').replaceWith('<a id="url_link" target="_blank" href="'+ response.short_url +'">'+ response.short_url +'</p>');
+					if (!('short_url' in response)) {
+						if ($('#url_link').length === 1) {
+							$('#url_link').replaceWith('<div id="url_link">Invalid URL</div>');
+						} else {
+							$('pre').append('<div id="url_link">Invalid URL</div>');
+						}
 					} else {
-						$("pre").append('<a id="url_link" target="_blank" href="'+ response.short_url +'">'+ response.short_url +'</p>');
-					}					
+						if ($('#url_link').length === 1) {
+							$('#url_link')
+							.replaceWith('<a id="url_link" target="_blank" href="'+ response.short_url +'">'+ response.short_url +'</p>');
+						} else {
+							$("pre")
+							.append('<a id="url_link" target="_blank" href="'+ response.short_url +'">'+ response.short_url +'</p>');
+						}
+					}
 				},
 				error: function(response) {
 					console.log(response);

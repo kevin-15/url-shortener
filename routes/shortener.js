@@ -12,9 +12,18 @@ router.post('/', async (req, res) => {
 	let obj = { original_url };
 	obj['url_id'] = url_id ? 'custom-' + url_id : shortid.generate()
 
+	if (validUrl.isUri(original_url) === undefined){
+		res
+		.send({
+			'success': false,
+			'message': 'Invalid URL'
+		});
+	}
+
 	db.checkUrl(obj).then((data) => {
 		if (data.rows.length) {
-			res.send({
+			res
+			.send({
 				'success': true,
 				'short_url': data.rows[0].short_url
 			});
